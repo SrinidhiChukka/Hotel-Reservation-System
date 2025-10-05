@@ -1,0 +1,65 @@
+import java.util.ArrayList;
+
+public class Hotel {
+    private ArrayList<Room> rooms;
+    private ArrayList<Reservation> reservations;
+
+    public Hotel() {
+        rooms = new ArrayList<>();
+        reservations = new ArrayList<>();
+
+        // Add some sample rooms
+        rooms.add(new Room(101, "Standard", 2500));
+        rooms.add(new Room(102, "Standard", 2500));
+        rooms.add(new Room(201, "Deluxe", 4000));
+        rooms.add(new Room(202, "Suite", 6000));
+    }
+
+    public void showAvailableRooms() {
+        System.out.println("\nAvailable Rooms:");
+        for (Room room : rooms) {
+            if (room.isAvailable()) {
+                System.out.println(room);
+            }
+        }
+    }
+
+    public void bookRoom(String guestName, int roomNumber, String checkIn, String checkOut) {
+        for (Room room : rooms) {
+            if (room.getRoomNumber() == roomNumber && room.isAvailable()) {
+                room.setAvailable(false);
+                reservations.add(new Reservation(guestName, roomNumber, checkIn, checkOut));
+                System.out.println("✅ Room " + roomNumber + " successfully booked for " + guestName);
+                return;
+            }
+        }
+        System.out.println("❌ Room not available or invalid room number.");
+    }
+
+    public void cancelReservation(String guestName) {
+        for (Reservation res : reservations) {
+            if (res.getGuestName().equalsIgnoreCase(guestName)) {
+                reservations.remove(res);
+                for (Room room : rooms) {
+                    if (room.getRoomNumber() == res.getRoomNumber()) {
+                        room.setAvailable(true);
+                    }
+                }
+                System.out.println("✅ Reservation canceled for " + guestName);
+                return;
+            }
+        }
+        System.out.println("❌ No reservation found under this name.");
+    }
+
+    public void showAllReservations() {
+        System.out.println("\nCurrent Reservations:");
+        if (reservations.isEmpty()) {
+            System.out.println("No reservations found.");
+            return;
+        }
+        for (Reservation res : reservations) {
+            System.out.println(res);
+        }
+    }
+}
