@@ -1,0 +1,57 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Hotel hotel = new Hotel();
+
+        while (true) {
+            System.out.println("\n=== HOTEL RESERVATION SYSTEM ===");
+            System.out.println("1. View Available Rooms");
+            System.out.println("2. Book a Room");
+            System.out.println("3. Cancel Reservation");
+            System.out.println("4. View All Reservations");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = sc.nextInt();
+            sc.nextLine(); // consume newline
+
+            switch (choice) {
+                case 1:
+                    hotel.showAvailableRooms();
+                    break;
+
+                case 2:
+                    System.out.print("Enter your name: ");
+                    String name = sc.nextLine();
+                    System.out.print("Enter room number: ");
+                    int roomNum = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter check-in date (dd-mm-yyyy): ");
+                    String inDate = sc.nextLine();
+                    System.out.print("Enter check-out date (dd-mm-yyyy): ");
+                    String outDate = sc.nextLine();
+                    hotel.bookRoom(name, roomNum, inDate, outDate);
+                    break;
+
+                case 3:
+                    System.out.print("Enter your name to cancel booking: ");
+                    String cancelName = sc.nextLine();
+                    hotel.cancelReservation(cancelName);
+                    break;
+
+                case 4:
+                    hotel.showAllReservations();
+                    break;
+
+                case 5:
+                    System.out.println("Thank you for using the Hotel Reservation System!");
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("Invalid choice, please try again.");
+            }
+        }
+    }
+}
